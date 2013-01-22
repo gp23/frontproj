@@ -1,0 +1,17 @@
+keyword list = {"and", "and_eq", "bitand", "bitor", "cmpl", "not", "not_eq", "or", "or_eq", "xor", "xor_eq", "noexcept", "nullptr", "asm", "auto", "register", "thread_local", "volatile", "bool", "true", "false", "void", "int", "signed", "unsigned", "long", "short", "unsigned int", "signed int", "short int", "unsigned short int", "signed short int", "long int", "unsigned long int", "signed long int", "float", "double", "long double",  "char", "char16_t", "char32_t", "unsigned char", "signed char", "wchar_t", "enum", "sizeof", "typedef", "typeid", "typename", "template", "break", "do", "for", "while", "continue", "if", "else", "switch", "case", "default", "goto", "try", "throw", "catch", "class", "public", "private", "protected", "static", "static_assert", "static_cast", "this", "operator", "struct", "alignas", "alignof", "alignment_of", "new", "delete", "union", "mutable", "const", "constexpr", "const_cast", "dynamic_cast", "reinterpret_cast", "explicit", "export", "extern", "friend", "inline", "namespace", "using", "return", "virtual", "decltype", "override", "final"}
+
+alphabetL  [a-z]
+alpabhetU	[A-Z]
+digit		[0-9]
+underscore	[_]
+whitespace	[ \t]
+newline		[ \n]
+identifier	{alphabetL|underscore}({alphabetL|alphabetU|underscore|digit})*
+pointer		"*"{identifier}+
+array		{identifier}+("["{digit}*"]")*
+integer		{digit}+
+real		{digit}+"."{digit}*
+character
+string		"""{character}"""
+comment
+
