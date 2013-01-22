@@ -30,3 +30,4 @@ string		".*"
 comment     ("/*"(.*)"*/")|("//"(.*)"//")
 
 macros  "#define "
+headerfile  "#include "("<"|"){string}(">"|")
