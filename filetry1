@@ -10,6 +10,7 @@ identifier	{alphabetL|underscore}({alphabetL|alphabetU|underscore|digit})*
 pointer		"*"{identifier}
 array		{identifier}("["{digit}*"]")*
 integer		{digit}+
+hexadecimal  "0x"{digit|[A-Fa-f]}+
 real		{digit}+"."{digit}*
 character   
 string		".*"
