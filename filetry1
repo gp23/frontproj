@@ -9,11 +9,21 @@ newline		[ \n]
 identifier	{alphabetL|underscore}({alphabetL|alphabetU|underscore|digit})*
 pointer		"*"{identifier}
 array		{identifier}("["{digit}*"]")*
-integer		[1-9]{digit}+
+decimal		[1-9]{digit}+
 octal     "0"{digit}+
 hexadecimal  {"0x"|"$"}{digit|[A-Fa-f]}+
-real		{digit}+"."{digit}*
-character   
+
+unsignedinteger {decimal}"u"
+longinteger     {decimal}"l"
+unsignedlonginteger {decimal}"ul"
+
+realdecimal		{decimal}"."{digit}*
+realoctal     {octal}"."{octal}*
+realhexadecimal {hexadecimal}"."{digit|[A-Fa-f]}+
+scientificdecimal {decimal|realdecimal}+"E"{"+"|"-"}?{decimal}
+scientificoctal   {octal|realoctal}+"E"{"+"|"-"}?{octal}
+scientifichexadecimal {hexadecimal|realhexadecimal}+"E"{"+"|"-"}?{digit|[A-Fa-f]}+
+
 string		".*"
 comment     ("/*"(.*)"*/")|("//"(.*)"//")
 
