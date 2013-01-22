@@ -7,11 +7,11 @@ underscore	[_]
 whitespace	[ \t]
 newline		[ \n]
 identifier	{alphabetL|underscore}({alphabetL|alphabetU|underscore|digit})*
-pointer		"*"{identifier}+
-array		{identifier}+("["{digit}*"]")*
+pointer		"*"{identifier}
+array		{identifier}("["{digit}*"]")*
 integer		{digit}+
 real		{digit}+"."{digit}*
 character   
-string		"""{character}"""
+string		".*"
 comment     ("/*"(.*)"*/")|("//"(.*)"//")
 
