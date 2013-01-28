@@ -32,7 +32,7 @@ comment     ("/*"(.*)"*/")|("//"(.*)"/n")
 macros  "#define "
 headerfile  "#include "("<"|"){string}(">"|")
 
-%
+%%
 
 "asm"              return(TOK_ASM);
 "auto"             return(TOK_AUTO);
@@ -169,5 +169,5 @@ headerfile  "#include "("<"|"){string}(">"|")
 "not"              return alternateKeyword_tok(TOK_BANG);
 "not_eq"           return alternateKeyword_tok(TOK_NOTEQUAL);
 
-%
+%%
 
