@@ -160,13 +160,6 @@ headerfile  "#include "("<"|"){string}(">"|")
 "{"                return (TOK_LBRACE);
 "}"                return (TOK_RBRACE);
 
-  /* "alternative tokens" of cppstd 2.5p2 */
-"<%"               return alternateKeyword_tok(TOK_LBRACE);
-"%>"               return alternateKeyword_tok(TOK_RBRACE);
-"<:"               return alternateKeyword_tok(TOK_LBRACKET);
-":>"               return alternateKeyword_tok(TOK_RBRACKET);
-  /* "%:" and "%:%:" correspond to "#" and "##", which are only for
-   * the preprocessor, so I will ignore them here */
 "and"              return alternateKeyword_tok(TOK_ANDAND);
 "bitor"            return alternateKeyword_tok(TOK_OR);
 "or"               return alternateKeyword_tok(TOK_OROR);
