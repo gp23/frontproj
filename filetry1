@@ -138,6 +138,9 @@ headerfile  "#include "("<"|"){string}".""h"(">"|")
 "cout"             return(TOK_COUT);
 "null"             return(TOK_NULL);
 "NULL"             return(TOK_NULL);
+"alignas"          return(TOK_ALIGNAS);
+"alignof"          return(TOK__ALIGNOF);
+"alignment_of"     return(TOK__ALIGNMENTOF);
 
 
 
