@@ -43,7 +43,6 @@ headerfile  "#include "("<"|"){string}(">"|")
 "bool"             return(TOK_BOOL);
 "case"             return(TOK_CASE);
 "catch"            return(TOK_CATCH);
-"cdecl"            return(TOK_CDECL);
 "char"             return(TOK_CHAR);
 "char"             return(TOK_CHAR16_T);
 "char32_t"         return(TOK_CHAR32_T);
@@ -86,7 +85,6 @@ headerfile  "#include "("<"|"){string}(">"|")
 "nullptr"          return(TOK_NULLPTR);
 "operator"         return(TOK_OPERATOR);
 "override"         return(TOK_OVERRIDE);
-"pascal"           return(TOK_PASCAL);
 "private"          return(TOK_PRIVATE);
 "protected"        return(TOK_PROTECTED);
 "public"           return(TOK_PUBLIC);
