@@ -34,6 +34,9 @@ headerfile  "#include "("<"|"){string}(">"|")
 
 %%
 
+"alignas"          return(TOK_ALIGNAS);
+"alignof"          return(TOK_ALIGNOF);
+"alignment_of"     return(TOK_ALIGNMENT_OF);
 "asm"              return(TOK_ASM);
 "auto"             return(TOK_AUTO);
 "break"            return(TOK_BREAK);
@@ -45,7 +48,9 @@ headerfile  "#include "("<"|"){string}(">"|")
 "class"            return(TOK_CLASS);
 "const"            return(TOK_CONST);
 "const_cast"       return(TOK_CONST_CAST);
+"const_expr"       return(TOK_CONST_EXPR);
 "continue"         return(TOK_CONTINUE);
+"decltype"         return(TOK_DECLTYPE);
 "default"          return(TOK_DEFAULT);
 "delete"           return(TOK_DELETE);
 "do"               return(TOK_DO);
@@ -57,6 +62,7 @@ headerfile  "#include "("<"|"){string}(">"|")
 "export"           return(TOK_EXPORT);
 "extern"           return(TOK_EXTERN);
 "false"            return(TOK_FALSE);
+"final"            return(TOK_FINAL);
 "float"            return(TOK_FLOAT);
 "for"              return(TOK_FOR);
 "friend"           return(TOK_FRIEND);
@@ -68,7 +74,9 @@ headerfile  "#include "("<"|"){string}(">"|")
 "mutable"          return(TOK_MUTABLE);
 "namespace"        return(TOK_NAMESPACE);
 "new"              return(TOK_NEW);
+"noexcept"         return(TOK_NOEXCEPT);
 "operator"         return(TOK_OPERATOR);
+"override"         return(TOK_OVERRIDE);
 "pascal"           return(TOK_PASCAL);
 "private"          return(TOK_PRIVATE);
 "protected"        return(TOK_PROTECTED);
@@ -80,11 +88,13 @@ headerfile  "#include "("<"|"){string}(">"|")
 "signed"           return(TOK_SIGNED);
 "sizeof"           return(TOK_SIZEOF);
 "static"           return(TOK_STATIC);
+"static_assert"    return(TOK_STATIC_ASSERT);
 "static_cast"      return(TOK_STATIC_CAST);
 "struct"           return(TOK_STRUCT);
 "switch"           return(TOK_SWITCH);
 "template"         return(TOK_TEMPLATE);
 "this"             return(TOK_THIS);
+"thread_local"     return(TOK_THREAD_LOCAL);
 "throw"            return(TOK_THROW);
 "true"             return(TOK_TRUE);
 "try"              return(TOK_TRY);
@@ -170,4 +180,3 @@ headerfile  "#include "("<"|"){string}(">"|")
 "not_eq"           return alternateKeyword_tok(TOK_NOTEQUAL);
 
 %%
-
