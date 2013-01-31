@@ -30,101 +30,116 @@ string		".*"
 comment     ("/*"(.*)"*/")|("//"(.*)"/n")
 
 macros  "#define "
-headerfile  "#include "("<"|"){string}(">"|")
+headerfile  "#include "("<"|"){string}".""h"(">"|")
 
 %%
 
+"and"              return alternateKeyword_tok(TOK_ANDAND);
+"and_eq"           return alternateKeyword_tok(TOK_ANDEQUAL);
+"bitor"            return alternateKeyword_tok(TOK_OR);
+"bitand"           return alternateKeyword_tok(TOK_AND);
+"compl"            return alternateKeyword_tok(TOK_TILDE);
+"not"              return alternateKeyword_tok(TOK_BANG);
+"not_eq"           return alternateKeyword_tok(TOK_NOTEQUAL);
+"or"               return alternateKeyword_tok(TOK_OROR);
+"xor"              return alternateKeyword_tok(TOK_XOR);
+"or_eq"            return alternateKeyword_tok(TOK_OREQUAL);
+"xor_eq"           return alternateKeyword_tok(TOK_XOREQUAL);
+"noexcept"         return(TOK_NOEXCEPT);
+"nullptr"          return(TOK_NULLPTR);
+
+
+"asm"              return(TOK_ASM);
+"auto"             return(TOK_AUTO);
 "alignas"          return(TOK_ALIGNAS);
 "alignof"          return(TOK_ALIGNOF);
 "alignment_of"     return(TOK_ALIGNMENT_OF);
-"asm"              return(TOK_ASM);
-"auto"             return(TOK_AUTO);
-"break"            return(TOK_BREAK);
-"bool"             return(TOK_BOOL);
-"case"             return(TOK_CASE);
-"catch"            return(TOK_CATCH);
-"char"             return(TOK_CHAR);
-"char"             return(TOK_CHAR16_T);
-"char32_t"         return(TOK_CHAR32_T);
-"cin"              return(TOK_CIN);
-"cout"             return(TOK_COUT);
-"class"            return(TOK_CLASS);
-"const"            return(TOK_CONST);
-"const_cast"       return(TOK_CONST_CAST);
-"const_expr"       return(TOK_CONST_EXPR);
-"continue"         return(TOK_CONTINUE);
-"decltype"         return(TOK_DECLTYPE);
-"default"          return(TOK_DEFAULT);
-"delete"           return(TOK_DELETE);
-"do"               return(TOK_DO);
-"double"           return(TOK_DOUBLE);
-"dynamic_cast"     return(TOK_DYNAMIC_CAST);
-"else"             return(TOK_ELSE);
-"enum"             return(TOK_ENUM);
-"explicit"         return(TOK_EXPLICIT);
-"export"           return(TOK_EXPORT);
-"extern"           return(TOK_EXTERN);
-"false"            return(TOK_FALSE);
-"final"            return(TOK_FINAL);
-"float"            return(TOK_FLOAT);
-"for"              return(TOK_FOR);
-"friend"           return(TOK_FRIEND);
-"goto"             return(TOK_GOTO);
-"if"               return(TOK_IF);
-"inline"           return(TOK_INLINE);
-"int"              return(TOK_INT);
-"long"             return(TOK_LONG);
-"long int"         return(TOK_LONG INT);
-"long double"      return(TOK_LONG DOUBLE);
-"mutable"          return(TOK_MUTABLE);
-"namespace"        return(TOK_NAMESPACE);
-"new"              return(TOK_NEW);
-"noexcept"         return(TOK_NOEXCEPT);
-"null"             return(TOK_NULL);
-"NULL"             return(TOK_NULL);
-"nullptr"          return(TOK_NULLPTR);
-"operator"         return(TOK_OPERATOR);
-"override"         return(TOK_OVERRIDE);
-"private"          return(TOK_PRIVATE);
-"protected"        return(TOK_PROTECTED);
-"public"           return(TOK_PUBLIC);
 "register"         return(TOK_REGISTER);
-"reinterpret_cast" return(TOK_REINTERPRET_CAST);
-"return"           return(TOK_RETURN);
-"short"            return(TOK_SHORT);
-"short int"        return(TOK_SHORT INT);
-"signed"           return(TOK_SIGNED);
-"signed char"    return(TOK_SIGNED CHAR);
-"signed int"     return(TOK_SIGNED INT);
-"signed long int"   return(TOK_SIGNED LONG INT);
-"signed short int"  return(TOK_SIGNED SHORT INT);
-"sizeof"           return(TOK_SIZEOF);
-"static"           return(TOK_STATIC);
-"static_assert"    return(TOK_STATIC_ASSERT);
-"static_cast"      return(TOK_STATIC_CAST);
-"struct"           return(TOK_STRUCT);
-"switch"           return(TOK_SWITCH);
-"template"         return(TOK_TEMPLATE);
-"this"             return(TOK_THIS);
 "thread_local"     return(TOK_THREAD_LOCAL);
-"throw"            return(TOK_THROW);
+"volatile"         return(TOK_VOLATILE);
 "true"             return(TOK_TRUE);
-"try"              return(TOK_TRY);
+"false"            return(TOK_FALSE);
+"void"             return(TOK_VOID);
+"int"              return(TOK_INT);
+"signed"           return(TOK_SIGNED);
+"unsigned"         return(TOK_UNSIGNED);
+"long"             return(TOK_LONG);
+"short"            return(TOK_SHORT);
+"signed int"     return(TOK_SIGNED INT);
+"unsigned int"     return(TOK_UNSIGNED INT);
+"short int"        return(TOK_SHORT INT);
+"signed short int"  return(TOK_SIGNED SHORT INT);
+"unsigned short int"  return(TOK_UNSIGNED SHORT INT);
+"long int"         return(TOK_LONG INT);
+"signed long int"   return(TOK_SIGNED LONG INT);
+"unsigned long int"   return(TOK_UNSIGNED LONG INT);
+"float"            return(TOK_FLOAT);
+"double"           return(TOK_DOUBLE);
+"long double"      return(TOK_LONG DOUBLE);
+"char"             return(TOK_CHAR);
+"char16_t"         return(TOK_CHAR16_T);
+"char32_t"         return(TOK_CHAR32_T);
+"signed char"    return(TOK_SIGNED CHAR);
+"unsigned char"    return(TOK_UNSIGNED CHAR);
+"wchar_t"          return(TOK_WCHAR_T);
+"enum"             return(TOK_ENUM);
+"sizeof"           return(TOK_SIZEOF);
 "typedef"          return(TOK_TYPEDEF);
 "typeid"           return(TOK_TYPEID);
 "typename"         return(TOK_TYPENAME);
+"template"         return(TOK_TEMPLATE);
+"break"            return(TOK_BREAK);
+"do"               return(TOK_DO);
+"for"              return(TOK_FOR);
+"while"            return(TOK_WHILE);
+"continue"         return(TOK_CONTINUE);
+"if"               return(TOK_IF);
+"else"             return(TOK_ELSE);
+"switch"           return(TOK_SWITCH);
+"case"             return(TOK_CASE);
+"default"          return(TOK_DEFAULT);
+"goto"             return(TOK_GOTO);
+"try"              return(TOK_TRY);
+"throw"            return(TOK_THROW);
+"catch"            return(TOK_CATCH);
+"class"            return(TOK_CLASS);
+"private"          return(TOK_PRIVATE);
+"protected"        return(TOK_PROTECTED);
+"public"           return(TOK_PUBLIC);
+"static"           return(TOK_STATIC);
+"static_assert"    return(TOK_STATIC_ASSERT);
+"static_cast"      return(TOK_STATIC_CAST);
+"this"             return(TOK_THIS);
+"operator"         return(TOK_OPERATOR);
+"struct"           return(TOK_STRUCT);
+"new"              return(TOK_NEW);
+"delete"           return(TOK_DELETE);
 "union"            return(TOK_UNION);
-"unsigned"         return(TOK_UNSIGNED);
-"unsigned char"    return(TOK_UNSIGNED CHAR);
-"unsigned int"     return(TOK_UNSIGNED INT);
-"unsigned long int"   return(TOK_UNSIGNED LONG INT);
-"unsigned short int"  return(TOK_UNSIGNED SHORT INT);
+"mutable"          return(TOK_MUTABLE);
+"const"            return(TOK_CONST);
+"const_cast"       return(TOK_CONST_CAST);
+"const_expr"       return(TOK_CONST_EXPR);
+"dynamic_cast"     return(TOK_DYNAMIC_CAST);
+"reinterpret_cast" return(TOK_REINTERPRET_CAST
+"explicit"         return(TOK_EXPLICIT);
+"export"           return(TOK_EXPORT);
+"extern"           return(TOK_EXTERN
+"friend"           return(TOK_FRIEND);
+"inline"           return(TOK_INLINE);
+"namespace"        return(TOK_NAMESPACE);
 "using"            return(TOK_USING);
 "virtual"          return(TOK_VIRTUAL);
-"void"             return(TOK_VOID);
-"volatile"         return(TOK_VOLATILE);
-"wchar_t"          return(TOK_WCHAR_T);
-"while"            return(TOK_WHILE);
+"return"           return(TOK_RETURN);
+"decltype"         return(TOK_DECLTYPE);
+"override"         return(TOK_OVERRIDE);
+"final"            return(TOK_FINAL);
+"bool"             return(TOK_BOOL);
+"cin"              return(TOK_CIN);
+"cout"             return(TOK_COUT);
+"null"             return(TOK_NULL);
+"NULL"             return(TOK_NULL);
+
+
 
 "("                return (TOK_LPAREN);
 ")"                return (TOK_RPAREN);
@@ -176,16 +191,6 @@ headerfile  "#include "("<"|"){string}(">"|")
 "{"                return (TOK_LBRACE);
 "}"                return (TOK_RBRACE);
 
-"and"              return alternateKeyword_tok(TOK_ANDAND);
-"bitor"            return alternateKeyword_tok(TOK_OR);
-"or"               return alternateKeyword_tok(TOK_OROR);
-"xor"              return alternateKeyword_tok(TOK_XOR);
-"compl"            return alternateKeyword_tok(TOK_TILDE);
-"bitand"           return alternateKeyword_tok(TOK_AND);
-"and_eq"           return alternateKeyword_tok(TOK_ANDEQUAL);
-"or_eq"            return alternateKeyword_tok(TOK_OREQUAL);
-"xor_eq"           return alternateKeyword_tok(TOK_XOREQUAL);
-"not"              return alternateKeyword_tok(TOK_BANG);
-"not_eq"           return alternateKeyword_tok(TOK_NOTEQUAL);
+
 
 %%
