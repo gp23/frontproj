@@ -3,9 +3,11 @@ keyword list = {"null","NULL","and", "and_eq", "bitand", "bitor", "cmpl", "not",
 alphabetL  [a-z]
 alpabhetU	[A-Z]
 digit		[0-9]
-underscore	[_]
-whitespace	[ \t]
-newline		[ \n]
+underscore  	[_]
+whitespace		[ \t]
+newline			[ \n]
+backslash		"\\"
+quote			[\"]
 identifier	{alphabetL|underscore}({alphabetL|alphabetU|underscore|digit})*
 pointer		"*"{identifier}
 array		{identifier}("["{digit}*"]")*
@@ -26,13 +28,15 @@ scientificdecimal {decimal|realdecimal}+"E"{"+"|"-"}?{decimal}
 scientificoctal   {octal|realoctal}+"E"{"+"|"-"}?{octal}
 scientifichexadecimal {hexadecimal|realhexadecimal}+"E"{"+"|"-"}?{digit|[A-Fa-f]}+
 
-string		".*"
-comment     ("/*"(.*)"*/")|("//"(.*)"/n")
+string  		{quote}.*{quote}
+comment			("/*"(.*)"*/")|("//"(.*)"/n")
 
-macros  "#define "
-headerfile  "#include "("<"|"){string}".""h"(">"|")
+macros  		"#define"{whitespace}+
+
+headerfile  "#include"{whitespace}+{"<"|"("}{alphabetL}{alphabetL|underscore}?".h"{">"|")"}
 
 %%
+
 
 "and"             {print("Keyword /n"); return alternateKeyword_tok(TOK_ANDAND);}
 "and_eq"           {print("Keyword /n"); return alternateKeyword_tok(TOK_ANDEQUAL);}
@@ -191,8 +195,25 @@ headerfile  "#include "("<"|"){string}".""h"(">"|")
 ","               {print("Operator /n"); return (TOK_COMMA);}
 "..."            {print("Operator /n");  return (TOK_ELLIPSIS);}
 ";"               {print("Operator /n"); return (TOK_SEMICOLON);}
-"{"               {print("Operator /n"); return (TOK_LBRACE);}
-"}"               {print("Operator /n"); return (TOK_RBRACE);}
+"{"               return (TOK_LBRACE);
+"}"              return (TOK_RBRACE);
 
+{identifier}  	{yylval = yytext; printf(“Identifier”); return TOKEN_IDENT;}
+
+{decimal}		{yylval.number = atoi(yytext); printf(“Decimal”);return TOKEN_DECIMAL;}
+{octal}			{yylval.number = atoi(yytext); printf(“Octal”); return TOKEN_OCTAL;}
+{hexadecimal}		{yylval.number = atoi(yytext); printf(“Hexadecimal”); return TOKEN_HEXADECIMAL;}
+
+{unsigneddecimal}	{yylval.number = atoi(yytext); printf(“unsigneddecimal”);return TOKEN_UNSIGNEDDECIMAL;}
+{unsignedoctal}		{yylval.number = atoi(yytext); printf(“unsignedoctal”);return TOKEN_UNSIGNEDOCTAL;}
+{unsignedhexadecimal}	{yylval.number = atoi(yytext);printf(“unsignedhexadecimal”); return TOKEN_UNSIGNEDHEXADECIMAL;}
+
+{realdecimal}		{yylval.number = atoi(yytext); printf(”realdecimal”); return TOKEN_REALDECIMAL;}
+{realoctal}		{yylval.number = atoi(yytext); printf(“realoctal”); return TOKEN_REALOCTAL;}
+{realhexadecimal}	{yylval.number = atoi(yytext); printf(“realhexadecimal”); return TOKEN_REALHEXADECIMAL;}
+
+{scientificdecimal}	{yylval.number = atoi(yytext); printf(“scientificdecimal”); return TOKEN_SCIENTIFICDECIMAL;}
+{scientificoctal}	{yylval.number = atoi(yytext); printf(“Scientificoctal”); return TOKEN_SCIENTIFICOCTAL;}
+{scientifichexadecimal}	{yylval.number = atoi(yytext); printf(“Scientifichexadecimal”); return TOKEN_SCIENTIFICHEXADECIMAL;}
 
 %%
