@@ -216,4 +216,6 @@ headerfile  "#include"{whitespace}+{"<"|"("}{alphabetL}{alphabetL|underscore}?".
 {scientificoctal}	{yylval.number = atoi(yytext); printf(“Scientificoctal”); return TOKEN_SCIENTIFICOCTAL;}
 {scientifichexadecimal}	{yylval.number = atoi(yytext); printf(“Scientifichexadecimal”); return TOKEN_SCIENTIFICHEXADECIMAL;}
 
+"cin"{whitespace}*{{">>"}{whitespace}*{identifer}}*  {return(TOKEN_INPUT);}
+"cout"{whitespace}*{{"<<"}{whitespace}*{{identifer}|{string}}}*  {return(TOKEN_OUTPUT);}
 %%
