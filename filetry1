@@ -1,219 +1,238 @@
-keyword list = {"null","NULL","and", "and_eq", "bitand", "bitor", "cmpl", "not", "not_eq", "or", "or_eq", "xor", "xor_eq", "noexcept", "nullptr", "asm", "auto", "register", "thread_local", "volatile", "bool", "true", "false", "void", "int", "signed", "unsigned", "long", "short", "unsigned int", "signed int", "short int", "unsigned short int", "signed short int", "long int", "unsigned long int", "signed long int", "float", "double", "long double",  "char", "char16_t", "char32_t", "unsigned char", "signed char", "wchar_t", "enum", "sizeof", "typedef", "typeid", "typename", "template", "break", "do", "for", "while", "continue", "if", "else", "switch", "case", "default", "goto", "try", "throw", "catch", "class", "public", "private", "protected", "static", "static_assert", "static_cast", "this", "operator", "struct", "alignas", "alignof", "alignment_of", "new", "delete", "union", "mutable", "const", "constexpr", "const_cast", "dynamic_cast", "reinterpret_cast", "explicit", "export", "extern", "friend", "inline", "namespace", "using", "return", "virtual", "decltype", "override", "final","cin","cout"}
+%{
+
+ #include<stdio.h>
+ #include<string.h>
+
+
+/*keyword list = {"null","NULL","and", "and_eq", "bitand", "bitor", "cmpl", "not", "not_eq", "or", "or_eq", "xor", "xor_eq", "noexcept", "nullptr", "asm", "auto", "register", "thread_local", "volatile", "bool", "true", "false", "void", "int", "signed", "unsigned", "long", "short", "unsigned int", "signed int", "short int", "unsigned short int", "signed short int", "long int", "unsigned long int", "signed long int", "float", "double", "long double",  "char", "char16_t", "char32_t", "unsigned char", "signed char", "wchar_t", "enum", "sizeof", "typedef", "typeid", "typename", "template", "break", "do", "for", "while", "continue", "if", "else", "switch", "case", "default", "goto", "try", "throw", "catch", "class", "public", "private", "protected", "static", "static_assert", "static_cast", "this", "operator", "struct", "alignas", "alignof", "alignment_of", "new", "delete", "union", "mutable", *"const", "constexpr", "const_cast", "dynamic_cast", "reinterpret_cast", "explicit", "export", "extern", "friend", "inline", "namespace", "using", "return", "virtual", "decltype", "override", "final","cin","cout"}
+*/
+%}
 
 alphabetL  [a-z]
-alpabhetU	[A-Z]
+alphabetU  [A-Z]
 digit		[0-9]
 underscore  	[_]
 whitespace		[ \t]
 newline			[ \n]
 backslash		"\\"
 quote			[\"]
-identifier	{alphabetL|underscore}({alphabetL|alphabetU|underscore|digit})*
+identifier	({alphabetL}|{underscore})({alphabetL}|{alphabetU}|{underscore}|{digit})*
 pointer		"*"{identifier}
 array		{identifier}("["{digit}*"]")*
-
 decimal		[1-9]{digit}+
 octal     "0"{digit}+
-hexadecimal  {"0x"|"$"}{digit|[A-Fa-f]}+
+hexadecimal  ("0x"|"$")({digit}|[A-Fa-f])+
 
-unsigneddecimal {decimal}{"u"|"U"}
-longdecimal     {decimal}{"l"|"L"}
-unsignedlongdecimal {decimal}{"ul"|"UL"}
+unsigneddecimal  {decimal}("u"|"U")
+longdecimal     {decimal}("l"|"L")
+unsignedlongdecimal {decimal}("ul"|"UL")
 
 realdecimal		{decimal}"."{digit}*
 realoctal     {octal}"."{octal}*
-realhexadecimal {hexadecimal}"."{digit|[A-Fa-f]}+
+realhexadecimal  {hexadecimal}"."({digit}|[A-Fa-f])+
 
-scientificdecimal {decimal|realdecimal}+"E"{"+"|"-"}?{decimal}
-scientificoctal   {octal|realoctal}+"E"{"+"|"-"}?{octal}
-scientifichexadecimal {hexadecimal|realhexadecimal}+"E"{"+"|"-"}?{digit|[A-Fa-f]}+
+scientificdecimal  ({decimal}|{realdecimal})+"E"("+"|"-")?{decimal}
+scientificoctal   ({octal}|{realoctal})+"E"("+"|"-")?{octal}
+scientifichexadecimal  ({hexadecimal}|{realhexadecimal})+"E"("+"|"-")?({digit}|[A-Fa-f])+
 
 string  		{quote}.*{quote}
 comment			("/*"(.*)"*/")|("//"(.*)"/n")
 
 macros  		"#define"{whitespace}+
 
-headerfile  "#include"{whitespace}+{"<"|"("}{alphabetL}{alphabetL|underscore}?".h"{">"|")"}
+headerfile  "#include"{whitespace}+("<"|"("){alphabetL}({alphabetL}|{underscore})?".h"(">"|")")
 
 %%
 
 
-"and"             {print("Keyword /n"); return alternateKeyword_tok(TOK_ANDAND);}
-"and_eq"           {print("Keyword /n"); return alternateKeyword_tok(TOK_ANDEQUAL);}
-"bitor"            {print("Keyword /n"); return alternateKeyword_tok(TOK_OR);}
-"bitand"           {print("Keyword /n"); return alternateKeyword_tok(TOK_AND);}
-"compl"            {print("Keyword /n"); return alternateKeyword_tok(TOK_TILDE);}
-"not"              {print("Keyword /n"); return alternateKeyword_tok(TOK_BANG);}
-"not_eq"           {print("Keyword /n"); return alternateKeyword_tok(TOK_NOTEQUAL);}
-"or"               {print("Keyword /n"); return alternateKeyword_tok(TOK_OROR);}
-"xor"              {print("Keyword /n"); return alternateKeyword_tok(TOK_XOR);}
-"or_eq"            {print("Keyword /n"); return alternateKeyword_tok(TOK_OREQUAL);}
-"xor_eq"           {print("Keyword /n"); return alternateKeyword_tok(TOK_XOREQUAL);}
-"noexcept"         {print("Keyword /n"); return(TOK_NOEXCEPT);}
-"nullptr"          {print("Keyword /n"); return(TOK_NULLPTR);}
+"and"             {printf("Keyword /n"); return alternateKeyword_tok(TOK_ANDAND);}
+"and_eq"           {printf("Keyword /n"); return alternateKeyword_tok(TOK_ANDEQUAL);}
+"bitor"            {printf("Keyword /n"); return alternateKeyword_tok(TOK_OR);}
+"bitand"           {printf("Keyword /n"); return alternateKeyword_tok(TOK_AND);}
+"compl"            {printf("Keyword /n"); return alternateKeyword_tok(TOK_TILDE);}
+"not"              {printf("Keyword /n"); return alternateKeyword_tok(TOK_BANG);}
+"not_eq"           {printf("Keyword /n"); return alternateKeyword_tok(TOK_NOTEQUAL);}
+"or"               {printf("Keyword /n"); return alternateKeyword_tok(TOK_OROR);}
+"xor"              {printf("Keyword /n"); return alternateKeyword_tok(TOK_XOR);}
+"or_eq"            {printf("Keyword /n"); return alternateKeyword_tok(TOK_OREQUAL);}
+"xor_eq"           {printf("Keyword /n"); return alternateKeyword_tok(TOK_XOREQUAL);}
+"noexcept"         {printf("Keyword /n"); return(TOK_NOEXCEPT);}
+"nullptr"          {printf("Keyword /n"); return(TOK_NULLPTR);}
 
 
-"asm"              {print("Keyword /n"); return(TOK_ASM);}
-"auto"             {print("Keyword /n"); return(TOK_AUTO);}
-"alignas"          {print("Keyword /n"); return(TOK_ALIGNAS);}
-"alignof"          {print("Keyword /n"); return(TOK_ALIGNOF);}
-"alignment_of"     {print("Keyword /n"); return(TOK_ALIGNMENT_OF);}
-"register"         {print("Keyword /n"); return(TOK_REGISTER);}
-"thread_local"     {print("Keyword /n"); return(TOK_THREAD_LOCAL);}
-"volatile"         {print("Keyword /n");return(TOK_VOLATILE);}
-"true"           {print("Keyword /n");  return(TOK_TRUE);}
-"false"           {print("Keyword /n"); return(TOK_FALSE);}
-"void"             {print("Keyword /n");return(TOK_VOID);}
-"int"              {print("Keyword /n");return(TOK_INT);}
-"signed"           {print("Keyword /n");return(TOK_SIGNED);}
-"unsigned"         {print("Keyword /n");return(TOK_UNSIGNED);}
-"long"             {print("Keyword /n");return(TOK_LONG);}
-"short"            {print("Keyword /n");return(TOK_SHORT);}
-"signed int"     {print("Keyword /n");return(TOK_SIGNED INT);}
-"unsigned int"     {print("Keyword /n");return(TOK_UNSIGNED INT);}
-"short int"        {print("Keyword /n");return(TOK_SHORT INT);}
-"signed short int" {print("Keyword /n"); return(TOK_SIGNED SHORT INT);}
-"unsigned short int"  {print("Keyword /n");return(TOK_UNSIGNED SHORT INT);}
-"long int"         {print("Keyword /n");return(TOK_LONG INT);}
-"signed long int"   {print("Keyword /n");return(TOK_SIGNED LONG INT);}
-"unsigned long int"  {print("Keyword /n"); return(TOK_UNSIGNED LONG INT);}
-"float"            {print("Keyword /n");return(TOK_FLOAT);}
-"double"           {print("Keyword /n");return(TOK_DOUBLE);}
-"long double"      {print("Keyword /n");return(TOK_LONG DOUBLE);}
-"char"            {print("Keyword /n"); return(TOK_CHAR);}
-"char16_t"         {print("Keyword /n");return(TOK_CHAR16_T);}
-"char32_t"         {print("Keyword /n");return(TOK_CHAR32_T);}
-"signed char"    {print("Keyword /n");return(TOK_SIGNED CHAR);}
-"unsigned char"   {print("Keyword /n"); return(TOK_UNSIGNED CHAR);}
-"wchar_t"         {print("Keyword /n"); return(TOK_WCHAR_T);}
-"enum"            {print("Keyword /n"); return(TOK_ENUM);}
-"sizeof"          {print("Keyword /n"); return(TOK_SIZEOF);}
-"typedef"        {print("Keyword /n");  return(TOK_TYPEDEF);}
-"typeid"         {print("Keyword /n");  return(TOK_TYPEID);}
-"typename"       {print("Keyword /n");  return(TOK_TYPENAME);}
-"template"       {print("Keyword /n");  return(TOK_TEMPLATE);}
-"break"          {print("Keyword /n");  return(TOK_BREAK);}
-"do"             {print("Keyword /n");  return(TOK_DO);}
-"for"           {print("Keyword /n");   return(TOK_FOR);}
-"while"          {print("Keyword /n");  return(TOK_WHILE);}
-"continue"      {print("Keyword /n");   return(TOK_CONTINUE);}
-"if"             {print("Keyword /n");  return(TOK_IF);}
-"else"           {print("Keyword /n");  return(TOK_ELSE);}
-"switch"           {print("Keyword /n");return(TOK_SWITCH);}
-"case"            {print("Keyword /n"); return(TOK_CASE);}
-"default"        {print("Keyword /n");  return(TOK_DEFAULT);}
-"goto"            {print("Keyword /n"); return(TOK_GOTO);}
-"try"             {print("Keyword /n"); return(TOK_TRY);}
-"throw"           {print("Keyword /n"); return(TOK_THROW);}
-"catch"           {print("Keyword /n"); return(TOK_CATCH);}
-"class"           {print("Keyword /n"); return(TOK_CLASS);}
-"private"         {print("Keyword /n"); return(TOK_PRIVATE);}
-"protected"      {print("Keyword /n");  return(TOK_PROTECTED);}
-"public"         {print("Keyword /n");  return(TOK_PUBLIC);}
-"static"         {print("Keyword /n");  return(TOK_STATIC);}
-"static_assert"  {print("Keyword /n");  return(TOK_STATIC_ASSERT);}
-"static_cast"    {print("Keyword /n");  return(TOK_STATIC_CAST);
-"this"           {print("Keyword /n");  return(TOK_THIS);
-"operator"        {print("Keyword /n"); return(TOK_OPERATOR);}
-"struct"         {print("Keyword /n");  return(TOK_STRUCT);}
-"new"             {print("Keyword /n"); return(TOK_NEW);}
-"delete"          {print("Keyword /n"); return(TOK_DELETE);}
-"union"          {print("Keyword /n");  return(TOK_UNION);}
-"mutable"        {print("Keyword /n");  return(TOK_MUTABLE);}
-"const"         {print("Keyword /n");   return(TOK_CONST);}
-"const_cast"     {print("Keyword /n");  return(TOK_CONST_CAST);}
-"const_expr"     {print("Keyword /n");  return(TOK_CONST_EXPR);}
-"dynamic_cast"    {print("Keyword /n"); return(TOK_DYNAMIC_CAST);}
-"reinterpret_cast"  {print("Keyword /n"); return(TOK_REINTERPRET_CAST);}
-"explicit"        {print("Keyword /n"); return(TOK_EXPLICIT);}
-"export"          {print("Keyword /n"); return(TOK_EXPORT);}
-"extern"           {print("Keyword /n");return(TOK_EXTERN);}
-"friend"          {print("Keyword /n"); return(TOK_FRIEND);}
-"inline"          {print("Keyword /n"); return(TOK_INLINE);}
-"namespace"       {print("Keyword /n"); return(TOK_NAMESPACE);}
-"using"           {print("Keyword /n"); return(TOK_USING);}
-"virtual"        {print("Keyword /n");  return(TOK_VIRTUAL);}
-"return"         {print("Keyword /n");  return(TOK_RETURN);}
-"decltype"       {print("Keyword /n");  return(TOK_DECLTYPE);}
-"override"        {print("Keyword /n"); return(TOK_OVERRIDE);}
-"final"          {print("Keyword /n");  return(TOK_FINAL);}
-"bool"           {print("Keyword /n");  return(TOK_BOOL);}
-"cin"            {print("Keyword /n");  return(TOK_CIN);}
-"cout"           {print("Keyword /n");  return(TOK_COUT);}
-"null"           {print("Keyword /n");  return(TOK_NULL);}
-"NULL"           {print("Keyword /n");  return(TOK_NULL);}
-"alignas"        {print("Keyword /n");  return(TOK_ALIGNAS);}
-"alignof"        {print("Keyword /n");  return(TOK__ALIGNOF);}
-"alignment_of"    {print("Keyword /n"); return(TOK__ALIGNMENTOF);}
+"asm"              {printf("Keyword /n"); return(TOK_ASM);}
+"auto"             {printf("Keyword /n"); return(TOK_AUTO);}
+"alignas"          {printf("Keyword /n"); return(TOK_ALIGNAS);}
+"alignof"          {printf("Keyword /n"); return(TOK_ALIGNOF);}
+"alignment_of"     {printf("Keyword /n"); return(TOK_ALIGNMENT_OF);}
+"register"         {printf("Keyword /n"); return(TOK_REGISTER);}
+"thread_local"     {printf("Keyword /n"); return(TOK_THREAD_LOCAL);}
+"volatile"         {printf("Keyword /n");return(TOK_VOLATILE);}
+"true"           {printf("Keyword /n");  return(TOK_TRUE);}
+"false"           {printf("Keyword /n"); return(TOK_FALSE);}
+"void"             {printf("Keyword /n");return(TOK_VOID);}
+"int"              {printf("Keyword /n");return(TOK_INT);}
+"signed"           {printf("Keyword /n");return(TOK_SIGNED);}
+"unsigned"         {printf("Keyword /n");return(TOK_UNSIGNED);}
+"long"             {printf("Keyword /n");return(TOK_LONG);}
+"short"            {printf("Keyword /n");return(TOK_SHORT);}
+"signed int"     {printf("Keyword /n");return(TOK_SIGNED_INT);}
+"unsigned int"     {printf("Keyword /n");return(TOK_UNSIGNED_INT);}
+"short int"        {printf("Keyword /n");return(TOK_SHORT_INT);}
+"signed short int" {printf("Keyword /n"); return(TOK_SIGNED_SHORT_INT);}
+"unsigned short int"  {printf("Keyword /n");return(TOK_UNSIGNED_SHORT_INT);}
+"long int"         {printf("Keyword /n");return(TOK_LONG_INT);}
+"signed long int"   {printf("Keyword /n");return(TOK_SIGNED_LONG_INT);}
+"unsigned long int"  {printf("Keyword /n"); return(TOK_UNSIGNED_LONG_INT);}
+"float"            {printf("Keyword /n");return(TOK_FLOAT);}
+"double"           {printf("Keyword /n");return(TOK_DOUBLE);}
+"long double"      {printf("Keyword /n");return(TOK_LONG DOUBLE);}
+"char"            {printf("Keyword /n"); return(TOK_CHAR);}
+"char16_t"         {printf("Keyword /n");return(TOK_CHAR16_T);}
+"char32_t"         {printf("Keyword /n");return(TOK_CHAR32_T);}
+"signed char"    {printf("Keyword /n");return(TOK_SIGNED_CHAR);}
+"unsigned char"   {printf("Keyword /n"); return(TOK_UNSIGNED_CHAR);}
+"wchar_t"         {printf("Keyword /n"); return(TOK_WCHAR_T);}
+"enum"            {printf("Keyword /n"); return(TOK_ENUM);}
+"sizeof"          {printf("Keyword /n"); return(TOK_SIZEOF);}
+"typedef"        {printf("Keyword /n");  return(TOK_TYPEDEF);}
+"typeid"         {printf("Keyword /n");  return(TOK_TYPEID);}
+"typename"       {printf("Keyword /n");  return(TOK_TYPENAME);}
+"template"       {printf("Keyword /n");  return(TOK_TEMPLATE);}
+"break"          {printf("Keyword /n");  return(TOK_BREAK);}
+"do"             {printf("Keyword /n");  return(TOK_DO);}
+"for"           {printf("Keyword /n");   return(TOK_FOR);}
+"while"          {printf("Keyword /n");  return(TOK_WHILE);}
+"continue"      {printf("Keyword /n");   return(TOK_CONTINUE);}
+"if"             {printf("Keyword /n");  return(TOK_IF);}
+"else"           {printf("Keyword /n");  return(TOK_ELSE);}
+"switch"           {printf("Keyword /n");return(TOK_SWITCH);}
+"case"            {printf("Keyword /n"); return(TOK_CASE);}
+"default"        {printf("Keyword /n");  return(TOK_DEFAULT);}
+"goto"            {printf("Keyword /n"); return(TOK_GOTO);}
+"try"             {printf("Keyword /n"); return(TOK_TRY);}
+"throw"           {printf("Keyword /n"); return(TOK_THROW);}
+"catch"           {printf("Keyword /n"); return(TOK_CATCH);}
+"class"           {printf("Keyword /n"); return(TOK_CLASS);}
+"private"         {printf("Keyword /n"); return(TOK_PRIVATE);}
+"protected"      {printf("Keyword /n");  return(TOK_PROTECTED);}
+"public"         {printf("Keyword /n");  return(TOK_PUBLIC);}
+"static"         {printf("Keyword /n");  return(TOK_STATIC);}
+"static_assert"  {printf("Keyword /n");  return(TOK_STATIC_ASSERT);}
+"static_cast"    {printf("Keyword /n");  return(TOK_STATIC_CAST);}
+"this"           {printf("Keyword /n");  return(TOK_THIS);}
+"operator"        {printf("Keyword /n"); return(TOK_OPERATOR);}
+"struct"         {printf("Keyword /n");  return(TOK_STRUCT);}
+"new"             {printf("Keyword /n"); return(TOK_NEW);}
+"delete"          {printf("Keyword /n"); return(TOK_DELETE);}
+"union"          {printf("Keyword /n");  return(TOK_UNION);}
+"mutable"        {printf("Keyword /n");  return(TOK_MUTABLE);}
+"const"         {printf("Keyword /n");   return(TOK_CONST);}
+"const_cast"     {printf("Keyword /n");  return(TOK_CONST_CAST);}
+"const_expr"     {printf("Keyword /n");  return(TOK_CONST_EXPR);}
+"dynamic_cast"    {printf("Keyword /n"); return(TOK_DYNAMIC_CAST);}
+"reinterpret_cast"  {printf("Keyword /n"); return(TOK_REINTERPRET_CAST);}
+"explicit"        {printf("Keyword /n"); return(TOK_EXPLICIT);}
+"export"          {printf("Keyword /n"); return(TOK_EXPORT);}
+"extern"           {printf("Keyword /n");return(TOK_EXTERN);}
+"friend"          {printf("Keyword /n"); return(TOK_FRIEND);}
+"inline"          {printf("Keyword /n"); return(TOK_INLINE);}
+"namespace"       {printf("Keyword /n"); return(TOK_NAMESPACE);}
+"using"           {printf("Keyword /n"); return(TOK_USING);}
+"virtual"        {printf("Keyword /n");  return(TOK_VIRTUAL);}
+"return"         {printf("Keyword /n");  return(TOK_RETURN);}
+"decltype"       {printf("Keyword /n");  return(TOK_DECLTYPE);}
+"override"        {printf("Keyword /n"); return(TOK_OVERRIDE);}
+"final"          {printf("Keyword /n");  return(TOK_FINAL);}
+"bool"           {printf("Keyword /n");  return(TOK_BOOL);}
+"cin"            {printf("Keyword /n");  return(TOK_CIN);}
+"cout"           {printf("Keyword /n");  return(TOK_COUT);}
+"null"           {printf("Keyword /n");  return(TOK_NULL);}
+"NULL"           {printf("Keyword /n");  return(TOK_NULL);}
 
 
 
-"("                return (TOK_LPAREN);}
-")"                return (TOK_RPAREN);}
-"["                return (TOK_LBRACKET);}
-"]"                return (TOK_RBRACKET);}
-"->"               {print("Operator /n");return (TOK_ARROW);}
-"::"               {print("Operator /n");return (TOK_COLONCOLON);}
-"."                {print("Operator /n");return (TOK_DOT);}
-"!"                {print("Operator /n");return (TOK_BANG);}
-"~"               {print("Operator /n"); return (TOK_TILDE);}
-"+"               {print("Operator /n"); return (TOK_PLUS);}
-"-"               {print("Operator /n"); return (TOK_MINUS);}
-"++"              {print("Operator /n"); return (TOK_PLUSPLUS);}
-"--"              {print("Operator /n"); return (TOK_MINUSMINUS);}
-"&"               {print("Operator /n"); return (TOK_AND);}
-"*"              {print("Operator /n");  return (TOK_STAR);}
-".*"             {print("Operator /n");  return (TOK_DOTSTAR);}
-"->*"            {print("Operator /n");  return (TOK_ARROWSTAR);}
-"/"              {print("Operator /n");  return (TOK_SLASH);}
-"%"              {print("Operator /n");  return (TOK_PERCENT);}
-"<<"             {print("Operator /n");  return (TOK_LEFTSHIFT);}
-">>"              {print("Operator /n"); return (TOK_RIGHTSHIFT);}
-"<"               {print("Operator /n"); return (TOK_LESSTHAN);}
-"<="              {print("Operator /n"); return (TOK_LESSEQ);}
-">"               {print("Operator /n"); return (TOK_GREATERTHAN);}
-">="              {print("Operator /n"); return (TOK_GREATEREQ);}
-"=="              {print("Operator /n"); return (TOK_EQUALEQUAL);}
-"!="              {print("Operator /n"); return (TOK_NOTEQUAL);}
-"^"               {print("Operator /n"); return (TOK_XOR);}
-"|"               {print("Operator /n"); return (TOK_OR);}
-"&&"              {print("Operator /n"); return (TOK_ANDAND);}
-"||"              {print("Operator /n"); return (TOK_OROR);}
-"?"              {print("Operator /n");  return (TOK_QUESTION);}
-":"              {print("Operator /n");  return (TOK_COLON);}
-"="               {print("Operator /n"); return (TOK_EQUAL);}
-"*="              {print("Operator /n"); return (TOK_STAREQUAL);}
-"/="              {print("Operator /n"); return (TOK_SLASHEQUAL);}
-"%="              {print("Operator /n"); return (TOK_PERCENTEQUAL);}
-"+="              {print("Operator /n"); return (TOK_PLUSEQUAL);}
-"-="              {print("Operator /n"); return (TOK_MINUSEQUAL);}
-"&="              {print("Operator /n"); return (TOK_ANDEQUAL);}
-"^="             {print("Operator /n");  return (TOK_XOREQUAL);}
-"|="             {print("Operator /n");  return (TOK_OREQUAL);}
-"<<="            {print("Operator /n");  return (TOK_LEFTSHIFTEQUAL);}
-">>="             {print("Operator /n"); return (TOK_RIGHTSHIFTEQUAL);}
-","               {print("Operator /n"); return (TOK_COMMA);}
-"..."            {print("Operator /n");  return (TOK_ELLIPSIS);}
-";"               {print("Operator /n"); return (TOK_SEMICOLON);}
-"{"               return (TOK_LBRACE);
-"}"              return (TOK_RBRACE);
 
-{identifier}  	{yylval = yytext; printf(“Identifier”); return TOKEN_IDENT;}
+"("               { return (TOK_LPAREN);}
+")"               { return (TOK_RPAREN);}
+"["               { return (TOK_LBRACKET);}
+"]"               { return (TOK_RBRACKET);}
+"->"               {printf("Operator /n");return (TOK_ARROW);}
+"::"               {printf("Operator /n");return (TOK_COLONCOLON);}
+"."                {printf("Operator /n");return (TOK_DOT);}
+"!"                {printf("Operator /n");return (TOK_BANG);}
+"~"               {printf("Operator /n"); return (TOK_TILDE);}
+"+"               {printf("Operator /n"); return (TOK_PLUS);}
+"-"               {printf("Operator /n"); return (TOK_MINUS);}
+"++"              {printf("Operator /n"); return (TOK_PLUSPLUS);}
+"--"              {printf("Operator /n"); return (TOK_MINUSMINUS);}
+"&"               {printf("Operator /n"); return (TOK_AND);}
+"*"              {printf("Operator /n");  return (TOK_STAR);}
+".*"             {printf("Operator /n");  return (TOK_DOTSTAR);}
+"->*"            {printf("Operator /n");  return (TOK_ARROWSTAR);}
+"/"              {printf("Operator /n");  return (TOK_SLASH);}
+"%"              {printf("Operator /n");  return (TOK_PERCENT);}
+"<<"             {printf("Operator /n");  return (TOK_LEFTSHIFT);}
+">>"              {printf("Operator /n"); return (TOK_RIGHTSHIFT);}
+"<"               {printf("Operator /n"); return (TOK_LESSTHAN);}
+"<="              {printf("Operator /n"); return (TOK_LESSEQ);}
+">"               {printf("Operator /n"); return (TOK_GREATERTHAN);}
+">="              {printf("Operator /n"); return (TOK_GREATEREQ);}
+"=="              {printf("Operator /n"); return (TOK_EQUALEQUAL);}
+"!="              {printf("Operator /n"); return (TOK_NOTEQUAL);}
+"^"               {printf("Operator /n"); return (TOK_XOR);}
+"|"               {printf("Operator /n"); return (TOK_OR);}
+"&&"              {printf("Operator /n"); return (TOK_ANDAND);}
+"||"              {printf("Operator /n"); return (TOK_OROR);}
+"?"              {printf("Operator /n");  return (TOK_QUESTION);}
+":"              {printf("Operator /n");  return (TOK_COLON);}
+"="               {printf("Operator /n"); return (TOK_EQUAL);}
+"*="              {printf("Operator /n"); return (TOK_STAREQUAL);}
+"/="              {printf("Operator /n"); return (TOK_SLASHEQUAL);}
+"%="              {printf("Operator /n"); return (TOK_PERCENTEQUAL);}
+"+="              {printf("Operator /n"); return (TOK_PLUSEQUAL);}
+"-="              {printf("Operator /n"); return (TOK_MINUSEQUAL);}
+"&="              {printf("Operator /n"); return (TOK_ANDEQUAL);}
+"^="             {printf("Operator /n");  return (TOK_XOREQUAL);}
+"|="             {printf("Operator /n");  return (TOK_OREQUAL);}
+"<<="            {printf("Operator /n");  return (TOK_LEFTSHIFTEQUAL);}
+">>="             {printf("Operator /n"); return (TOK_RIGHTSHIFTEQUAL);}
+","               {printf("Operator /n"); return (TOK_COMMA);}
+"..."            {printf("Operator /n");  return (TOK_ELLIPSIS);}
+";"               {printf("Operator /n"); return (TOK_SEMICOLON);}
+"{"             {  return (TOK_LBRACE);}
+"}"             { return (TOK_RBRACE);}
 
-{decimal}		{yylval.number = atoi(yytext); printf(“Decimal”);return TOKEN_DECIMAL;}
-{octal}			{yylval.number = atoi(yytext); printf(“Octal”); return TOKEN_OCTAL;}
-{hexadecimal}		{yylval.number = atoi(yytext); printf(“Hexadecimal”); return TOKEN_HEXADECIMAL;}
+{identifier}  	{printf(“Identifier”); return TOKEN_IDENT;}
 
-{unsigneddecimal}	{yylval.number = atoi(yytext); printf(“unsigneddecimal”);return TOKEN_UNSIGNEDDECIMAL;}
-{unsignedoctal}		{yylval.number = atoi(yytext); printf(“unsignedoctal”);return TOKEN_UNSIGNEDOCTAL;}
-{unsignedhexadecimal}	{yylval.number = atoi(yytext);printf(“unsignedhexadecimal”); return TOKEN_UNSIGNEDHEXADECIMAL;}
+{decimal}		{ printf(“Decimal”);return TOKEN_DECIMAL;}
+{octal}			{printf(“Octal”); return TOKEN_OCTAL;}
+{hexadecimal}		{ printf(“Hexadecimal”); return TOKEN_HEXADECIMAL;}
 
-{realdecimal}		{yylval.number = atoi(yytext); printf(”realdecimal”); return TOKEN_REALDECIMAL;}
-{realoctal}		{yylval.number = atoi(yytext); printf(“realoctal”); return TOKEN_REALOCTAL;}
-{realhexadecimal}	{yylval.number = atoi(yytext); printf(“realhexadecimal”); return TOKEN_REALHEXADECIMAL;}
+{unsigneddecimal}	{printf(“unsigneddecimal”);return TOKEN_UNSIGNEDDECIMAL;}
 
-{scientificdecimal}	{yylval.number = atoi(yytext); printf(“scientificdecimal”); return TOKEN_SCIENTIFICDECIMAL;}
-{scientificoctal}	{yylval.number = atoi(yytext); printf(“Scientificoctal”); return TOKEN_SCIENTIFICOCTAL;}
-{scientifichexadecimal}	{yylval.number = atoi(yytext); printf(“Scientifichexadecimal”); return TOKEN_SCIENTIFICHEXADECIMAL;}
+
+{realdecimal}		{ printf(”realdecimal”); return TOKEN_REALDECIMAL;}
+{realoctal}		{ printf(“realoctal”); return TOKEN_REALOCTAL;}
+{realhexadecimal}	{ printf(“realhexadecimal”); return TOKEN_REALHEXADECIMAL;}
+
+{scientificdecimal}	{printf(“scientificdecimal”); return TOKEN_SCIENTIFICDECIMAL;}
+{scientificoctal}	{ printf(“Scientificoctal”); return TOKEN_SCIENTIFICOCTAL;}
+{scientifichexadecimal}	{printf(“Scientifichexadecimal”); return TOKEN_SCIENTIFICHEXADECIMAL;}
 
 %%
+ 
+int main()
+{
+
+yylex();
+printf("hello");
+return 0;
+
+}
+
+/*
+*  int yywrap(void) {
+*    return 1;
+*}  
+*/
